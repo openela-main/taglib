@@ -5,27 +5,21 @@
 #bcond_without doc
 %global apidocdir __api-doc_fedora
 
-Name:       taglib	
+Name:       taglib
 Summary:    Audio Meta-Data Library
-Version:    1.12
-Release:    12%{?dist}
+Version:    1.13.1
+Release:    1%{?dist}
 
-License:    LGPLv2 or MPLv1.1
-URL:        http://taglib.github.io/
-%if 0%{?snap:1}
-Source0:    taglib-%{version}-%{snap}.tar.gz
-%else
-Source0:    http://taglib.github.io/releases/taglib-%{version}%{?beta}.tar.gz
-%endif
-# The snapshot tarballs generated with the following script:
-Source1:    taglib-snapshot.sh
+License:    (LGPL-2.1-only OR MPL-1.1) AND BSD-2-Clause AND LGPL-2.1-only
+URL:        https://taglib.github.io/
+Source0:    https://taglib.github.io/releases/taglib-%{version}%{?beta}.tar.gz
 
 # http://bugzilla.redhat.com/343241
 # fix multilib, and drop -lz flag to consumers (probably only needed for static linking)
-Patch0:     taglib-1.12-multilib.patch
+Patch0:     taglib-1.13.1-multilib.patch
 
-BuildRequires:  gcc
-BuildRequires:  gcc-c++
+BuildRequires: gcc
+BuildRequires: gcc-c++
 BuildRequires: cmake
 BuildRequires: pkgconfig
 BuildRequires: zlib-devel
@@ -50,7 +44,7 @@ BuildArch: noarch
 This is API documentation generated from the TagLib source code.
 
 %package devel
-Summary: Development files for %{name} 
+Summary: Development files for %{name}
 Requires: %{name}%{?_isa} = %{version}-%{release}
 %if ! %{with doc}
 Obsoletes: %{name}-doc < %{version}-%{release}
@@ -122,6 +116,10 @@ test "$(pkg-config --modversion taglib_c)" = "%{version}"
 
 
 %changelog
+* Fri Mar 14 2025 Wim Taymans <wtaymans@redhat.com> - 1.13.1-1
+- Upgrade to v1.13.1
+  Resolves: RHEL-72785
+
 * Tue Oct 29 2024 Troy Dawson <tdawson@redhat.com> - 1.12-12
 - Bump release for October 2024 mass rebuild:
   Resolves: RHEL-64018
@@ -405,7 +403,7 @@ test "$(pkg-config --modversion taglib_c)" = "%{version}"
 - svn20071111 snapshot (#376241)
 
 * Thu Sep 27 2007 Rex Dieter <rdieter[AT]fedoraproject.org> 1.5-0.5.20070924svn
-- -BR: automake 
+- -BR: automake
 - +BR: zlib-devel
 
 * Thu Sep 27 2007 Rex Dieter <rdieter[AT]fedoraproject.org> 1.5-0.4.20070924svn
